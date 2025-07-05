@@ -1,0 +1,42 @@
+.nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 56px;
+
+    border-top: 1px solid #ddd;
+    background: white;
+    position: sticky;
+    bottom: 0;
+    margin: 0 10px 15px 10px;
+    border-radius: 12px;
+}
+
+.nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    font-size: 22px;
+    color: #888;
+}
+
+.nav a.active .icon {
+    color: #4e60ff;
+    transform: scale(1.1);
+}
+
+.nav a.active .title {
+    color: #4e60ff;
+    font-weight: 500;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    color: black;
+}
+
+.title {
+    font-size: 12px;
+}
