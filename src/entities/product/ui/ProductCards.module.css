@@ -1,0 +1,75 @@
+.card {
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 3px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.imageContainer {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: center;
+}
+
+.priceContainer {
+    grid-column: 3/4;
+    grid-row: 1/2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.meta {
+    grid-column: 2/3;
+    grid-row: 2 / 3;
+    font-size: 12px;
+    color: #666;
+    align-self: start;
+}
+
+.image {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.name {
+    font-size: 15px;
+    margin: 0 0 8px 0;
+    color: #333;
+
+    text-overflow: ellipsis;
+}
+
+.features {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.price {
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.buyButton {
+    width: auto;
+    margin-top: auto;
+    padding: 6px 10px;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px 0;
+    font-weight: bold;
+}

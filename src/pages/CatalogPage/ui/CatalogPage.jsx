@@ -1,46 +1,13 @@
+import ProductCards from "../../../entities/product/ui/ProductCards";
+import style from "./CatalogPage.module.css";
+
 export const CatalogPage = () => {
     return (
         <div>
-            <h2>Каталог</h2>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "16px",
-                    marginTop: "16px",
-                }}
-            >
-                <div
-                    style={{
-                        background: "#fff",
-                        padding: "16px",
-                        borderRadius: "8px",
-                        color: "black",
-                    }}
-                >
-                    Товар 1
-                </div>
-                <div
-                    style={{
-                        background: "#fff",
-                        padding: "16px",
-                        borderRadius: "8px",
-                        color: "black",
-                    }}
-                >
-                    Товар 2
-                </div>
-                <div
-                    style={{
-                        background: "#fff",
-                        padding: "16px",
-                        borderRadius: "8px",
-                        color: "black",
-                    }}
-                >
-                    Товар 3
-                </div>
-            </div>
+            <h2 className={style.title}>Каталог</h2>
+            <ul className="catalog">
+                <ProductCards />
+            </ul>
         </div>
     );
 };
