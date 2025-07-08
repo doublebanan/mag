@@ -21,12 +21,12 @@
 }
 
 .nav a.active .icon {
-    color: #4e60ff;
+    color: var(--);
     transform: scale(1.1);
 }
 
 .nav a.active .title {
-    color: #4e60ff;
+    color: var(--);
     font-weight: 500;
 }
 

@@ -1,79 +1,49 @@
 .title {
-    color: #333;
+    color: var(--text);
     margin-bottom: 10px;
 }
 
 .card {
+    display: grid;
+    grid-template-columns: 80px auto;
+    grid-template-rows: 60px auto;
     font-family: "YS Text", Arial, sans-serif;
     max-width: 400px;
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    padding: 16px;
+    padding: 8px;
     background-color: #fff;
+    margin-bottom: 10px;
 }
 
-.storeInfo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.storeName {
-    font-size: 16px;
-    font-weight: 700;
-    margin: 0 8px 0 0;
-    color: #000;
-}
-
-.storeBadge {
-    font-size: 12px;
-    padding: 2px 6px;
-    background-color: #f0f0f0;
-    border-radius: 4px;
-    color: #666;
+.imageContainer {
+    grid-column: 1/2;
+    grid-row: 1/2;
 }
 
 .productMain {
     margin-bottom: 16px;
+    grid-column: 2/3;
 }
 
-.volumeBadge {
-    display: inline-block;
-    padding: 2px 6px;
-    background-color: #f0f0f0;
+.image {
+    width: 80px;
+    height: auto;
     border-radius: 4px;
-    font-size: 12px;
-    margin-bottom: 8px;
 }
 
 .productTitle {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
     margin: 0 0 8px 0;
     color: #000;
 }
 
-.productTags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-.productTags span {
-    font-size: 12px;
-    color: #666;
-    padding: 2px 6px;
-    background-color: #f5f5f5;
-    border-radius: 4px;
-}
-
-.discountBadge {
-    color: #fff;
-    background-color: #f33 !important;
-}
-
 .priceBlock {
-    margin-bottom: 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    grid-column: 2/3;
 }
 
 .priceContainer {
@@ -84,38 +54,15 @@
 }
 
 .currentPrice {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     color: #000;
-}
-
-.oldPrice {
-    font-size: 14px;
-    color: #999;
-    text-decoration: line-through;
-}
-
-.deliveryInfo {
-    font-size: 14px;
-    color: #666;
-}
-
-.discountNote {
-    background-color: #fff8e1;
-    padding: 8px 12px;
-    border-radius: 8px;
-    margin-bottom: 16px;
-    font-size: 14px;
-}
-
-.discountNote strong {
-    color: #f33;
 }
 
 .promoSection {
     border-top: 1px solid #f0f0f0;
     padding-top: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     max-width: 400px;
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
@@ -135,30 +82,31 @@
     justify-content: space-between;
     font-size: 14px;
     color: #666;
-    margin-bottom: 8px;
 }
 
 .promoPrice {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 16px;
-}
+    font-size: 14px;
 
-.promoPrice span:first-child {
-    font-weight: 700;
-}
-
-.saving {
-    color: #f33;
+    color: rgb(255, 133, 133);
     font-weight: 500;
 }
 
 .totalPrice {
     background-color: #f9f9f9;
     border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 16px;
+    padding: 14px;
+    margin-bottom: 10px;
+}
+
+.input {
+    font-size: 15px;
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
 }
 
 .priceRow {
@@ -166,30 +114,7 @@
     justify-content: space-between;
     font-size: 14px;
     margin-bottom: 8px;
-}
-
-.priceRow:last-child {
-    margin-bottom: 0;
-}
-
-.installmentOption {
-    background-color: #f0f7ff;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 16px;
-}
-
-.installmentPlan {
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 4px;
-    color: #0066ff;
-}
-
-.installmentNote {
-    font-size: 14px;
-    color: #666;
-    line-height: 1.4;
+    color: var(--text);
 }
 
 .checkoutBlock {
@@ -197,10 +122,12 @@
     justify-content: space-between;
     align-items: center;
     max-width: 400px;
+    height: 76px;
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     padding: 16px;
     background-color: #fff;
+    gap: 5px;
 }
 
 .productCount {
@@ -215,12 +142,6 @@
     margin-right: 12px;
 }
 
-.originalPrice {
-    font-size: 14px;
-    color: #999;
-    text-decoration: line-through;
-}
-
 .discountedPrice {
     font-size: 18px;
     font-weight: 700;
@@ -229,7 +150,7 @@
 
 .checkoutButton {
     background-color: #75cbf3;
-    border: none;
+    border: 1px solid transparent;
     border-radius: 8px;
     padding: 12px 24px;
     font-size: 16px;
@@ -241,4 +162,17 @@
 .checkoutButton:hover {
     background-color: white;
     border: 1px solid #75cbf3;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    color: var(--blue);
+}
+
+.button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }

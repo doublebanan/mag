@@ -8,7 +8,7 @@ export const TopBar = () => {
             <input
                 className={styles.searchInput}
                 type="text"
-                placeholder="Search..."
+                placeholder="Поиск..."
             />
             <button className={styles.cloudBtn}>
                 <img src={logo} alt="#" />

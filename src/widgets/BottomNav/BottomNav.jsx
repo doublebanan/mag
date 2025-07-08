@@ -16,21 +16,21 @@ export const BottomNav = () => {
                 className={pathname === "/catalog" ? styles.active : ""}
             >
                 <HomeIcon className={styles.icon} />
-                <div className={styles.title}>home</div>
+                <div className={styles.title}>каталог</div>
             </Link>
             <Link
                 to="/cart"
                 className={pathname === "/cart" ? styles.active : ""}
             >
                 <TrashIcon className={styles.icon} />
-                <div className={styles.title}>trash</div>
+                <div className={styles.title}>корзина</div>
             </Link>
             <Link
                 to="/profile"
                 className={pathname === "/profile" ? styles.active : ""}
             >
                 <UserIcon className={styles.icon} />
-                <div className={styles.title}>user</div>
+                <div className={styles.title}>профиль</div>
             </Link>
         </nav>
     );
