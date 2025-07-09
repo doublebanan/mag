@@ -1,0 +1,35 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.editButton {
+    background: none;
+    border: 1px solid #ddd;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.tabContent h3 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.actionButton {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: var(--blue);
+    color: var(--text);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
