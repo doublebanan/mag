@@ -17,6 +17,12 @@
     grid-row: 1 / span 2;
     align-self: center;
 }
+.buttonContainer {
+    grid-column: 3;
+    grid-row: 2;
+    display: flex;
+    justify-content: flex-end;
+}
 
 .priceContainer {
     grid-column: 3/4;
@@ -30,7 +36,9 @@
     grid-row: 2 / 3;
     font-size: 12px;
     color: var(--textGray);
-    align-self: start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .image {
@@ -40,7 +48,7 @@
 }
 
 .name {
-    font-size: 15px;
+    font-size: 12px;
     margin: 0 0 8px 0;
     color: var(--text);
 
@@ -67,7 +75,6 @@
     padding: 6px 10px;
     background: var(--blue);
     color: var(--text);
-    border: none;
     border-radius: 4px;
     cursor: pointer;
     margin: 5px 0;

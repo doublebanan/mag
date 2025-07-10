@@ -37,7 +37,7 @@ export const ProfileNav = ({ activeTab, setActiveTab }) => {
                 onClick={() => setActiveTab("payments")}
             >
                 <CardIcon className={styles.icon} />
-                <span>Способы оплаты</span>
+                <span>Баланс</span>
             </button>
         </nav>
     );

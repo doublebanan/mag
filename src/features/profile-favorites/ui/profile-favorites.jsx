@@ -1,3 +1,5 @@
+import { Button } from "../../../shared/assets/ui/Button/Button";
+
 import styles from "./profile-favorites.module.css";
 
 export const FavoritesList = () => {
@@ -6,9 +8,7 @@ export const FavoritesList = () => {
             <h3 className={styles.subtitle}>Избранные товары</h3>
             <div className={styles.emptyState}>
                 <p>Пока ничего нет</p>
-                <button className={styles.actionButton}>
-                    Перейти в каталог
-                </button>
+                <Button size="medium">Перейти в каталог</Button>
             </div>
         </div>
     );

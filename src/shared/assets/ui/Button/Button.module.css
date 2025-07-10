@@ -1,33 +1,37 @@
 .button {
     border: none;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 500;
     border-radius: 8px;
     transition: background 0.2s ease;
 }
 
 .primary {
-    background: #4e60ff;
-    color: white;
+    background: var(--blue);
+    color: var(--text);
+    border: 1px solid transparent;
 }
 
 .secondary {
-    background: transparent;
-    border: 1px solid #4e60ff;
-    color: #4e60ff;
+    background-color: white;
+    border: 1px solid var(--blue);
+    color: var(--blue);
 }
 
 .small {
-    padding: 6px 12px;
+    padding: 6px 18px;
     font-size: 12px;
+    margin: 5px 0;
+    border-radius: 4px;
 }
 
 .medium {
-    padding: 10px 16px;
-    font-size: 14px;
+    padding: 12px 24px;
+    font-size: 16px;
 }
 
-.large {
-    padding: 14px 20px;
-    font-size: 16px;
+.medium:hover {
+    background-color: transparent;
+    color: var(--blue);
+    border: 1px solid #75cbf3;
 }

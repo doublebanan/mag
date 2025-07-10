@@ -1,3 +1,5 @@
+import { Button } from "../../../shared/assets/ui/Button/Button";
+
 import styles from "./profile-orders.module.css";
 
 export const OrdersList = () => {
@@ -8,9 +10,7 @@ export const OrdersList = () => {
                 {/* Будет список заказов */}
                 <div className={styles.emptyState}>
                     <p>Вы ещё не сделали ни одного заказа</p>
-                    <button className={styles.actionButton}>
-                        Перейти в каталог
-                    </button>
+                    <Button size="medium">Перейти в каталог</Button>
                 </div>
             </div>
         </div>

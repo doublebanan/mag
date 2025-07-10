@@ -1,8 +1,12 @@
 import { useState } from "react";
+import { Button } from "../../../shared/assets/ui/Button/Button";
+import { useCartStore } from "../../../features/cart/model/useCartStore";
 
 import styles from "./ProductCards.module.css";
 
 const ProductCards = () => {
+    // const addFormCart = useCartStore((state) => state.addToCart);
+
     const [products, setProducts] = useState([
         {
             id: "1",
@@ -10,7 +14,7 @@ const ProductCards = () => {
             price: 399,
             currency: "₽",
             category: "Вентиляторы",
-            isHit: true,
+
             rating: {
                 value: 4.7,
             },
@@ -18,7 +22,6 @@ const ProductCards = () => {
             images: [
                 "https://c.dns-shop.ru/thumb/st1/fit/320/250/26d0e711aaa09113c141cbf64614aa49/0743b8c34a035b464d83f8528d9f20ea1672a862c70e23db028fdcbbbc75a4ae.jpg",
             ],
-            compareEnabled: true,
         },
         {
             id: "2",
@@ -26,7 +29,7 @@ const ProductCards = () => {
             price: 599,
             currency: "₽",
             category: "Вентиляторы",
-            isHit: false,
+
             rating: {
                 value: 4.56,
             },
@@ -34,7 +37,6 @@ const ProductCards = () => {
             images: [
                 "https://c.dns-shop.ru/thumb/st1/fit/320/250/96aaa37c0164d62ecbb6338dd50f7df6/1077aeed794c9352b386674d678278e53c22f912616768ba6935a86f1cda4585.jpg",
             ],
-            compareEnabled: true,
         },
         {
             id: "3",
@@ -42,15 +44,13 @@ const ProductCards = () => {
             price: 799,
             currency: "₽",
             category: "Вентиляторы",
-            isHit: false,
-            specialOffer: "Начинка в DNS",
+
             rating: {
                 value: 5,
             },
             images: [
                 "https://c.dns-shop.ru/thumb/st1/fit/320/250/bed953744911bae61aa0a9e52718ee38/453c4e6406c9beee46b86bca9ffb5f4e385c577413a304584df33b8d64a2b38e.jpg",
             ],
-            compareEnabled: true,
         },
         {
             id: "4",
@@ -58,7 +58,7 @@ const ProductCards = () => {
             price: 399,
             currency: "₽",
             category: "Вентиляторы",
-            isHit: true,
+
             rating: {
                 value: 4.7,
             },
@@ -66,7 +66,6 @@ const ProductCards = () => {
             images: [
                 "https://c.dns-shop.ru/thumb/st1/fit/320/250/26d0e711aaa09113c141cbf64614aa49/0743b8c34a035b464d83f8528d9f20ea1672a862c70e23db028fdcbbbc75a4ae.jpg",
             ],
-            compareEnabled: true,
         },
         {
             id: "5",
@@ -74,7 +73,7 @@ const ProductCards = () => {
             price: 599,
             currency: "₽",
             category: "Вентиляторы",
-            isHit: false,
+
             rating: {
                 value: 4.56,
             },
@@ -82,7 +81,6 @@ const ProductCards = () => {
             images: [
                 "https://c.dns-shop.ru/thumb/st1/fit/320/250/96aaa37c0164d62ecbb6338dd50f7df6/1077aeed794c9352b386674d678278e53c22f912616768ba6935a86f1cda4585.jpg",
             ],
-            compareEnabled: true,
         },
         {
             id: "6",
@@ -90,15 +88,13 @@ const ProductCards = () => {
             price: 799,
             currency: "₽",
             category: "Вентиляторы",
-            isHit: false,
-            specialOffer: "Начинка в DNS",
+
             rating: {
                 value: 5,
             },
             images: [
                 "https://c.dns-shop.ru/thumb/st1/fit/320/250/bed953744911bae61aa0a9e52718ee38/453c4e6406c9beee46b86bca9ffb5f4e385c577413a304584df33b8d64a2b38e.jpg",
             ],
-            compareEnabled: true,
         },
     ]);
 
@@ -126,7 +122,14 @@ const ProductCards = () => {
                         <span className={styles.price}>
                             {product.price} {product.currency}
                         </span>
-                        <button className={styles.buyButton}>Купить</button>
+                    </div>
+                    <div className={styles.buttonContainer}>
+                        <Button
+                            size="small"
+                            // onClick={() => addFormCart(product.id)}
+                        >
+                            Купить
+                        </Button>
                     </div>
                 </li>
             );
