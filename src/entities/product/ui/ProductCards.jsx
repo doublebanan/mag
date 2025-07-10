@@ -5,7 +5,11 @@ import { useCartStore } from "../../../features/cart/model/useCartStore";
 import styles from "./ProductCards.module.css";
 
 const ProductCards = () => {
+<<<<<<< HEAD
     // const addFormCart = useCartStore((state) => state.addToCart);
+=======
+    const addFormCart = useCartStore((state) => state.addToCart);
+>>>>>>> 5a7415d (Сделал удаление и добавление в состоянии корзины)
 
     const [products, setProducts] = useState([
         {
@@ -126,7 +130,9 @@ const ProductCards = () => {
                     <div className={styles.buttonContainer}>
                         <Button
                             size="small"
-                            // onClick={() => addFormCart(product.id)}
+
+
+                            onClick={() => addFormCart(product)}
                         >
                             Купить
                         </Button>
