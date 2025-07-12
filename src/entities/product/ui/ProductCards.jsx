@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Button } from "../../../shared/assets/ui/Button/Button";
 import { useCartStore } from "../../../features/cart/model/useCartStore";
+import { useFavoriteStore } from "../../../features/profile-favorites/model/useFavoriteStore";
 
 import styles from "./ProductCards.module.css";
 
+import HeartIcon from "../../../shared/assets/icons/heart.svg?react";
+
 const ProductCards = () => {
-<<<<<<< HEAD
-    // const addFormCart = useCartStore((state) => state.addToCart);
-=======
     const addFormCart = useCartStore((state) => state.addToCart);
->>>>>>> 5a7415d (Сделал удаление и добавление в состоянии корзины)
+    const toggleFavorites = useFavoriteStore((state) => state.toggleFavorite);
+    const favorites = useFavoriteStore((state) => state.favorites);
 
     const [products, setProducts] = useState([
         {
@@ -104,6 +105,7 @@ const ProductCards = () => {
 
     function onProducts(items) {
         return items.map((product) => {
+            const favorite = favorites.some((item) => item.id === product.id);
             return (
                 <li key={product.id} className={styles.card}>
                     <div className={styles.imageContainer}>
@@ -126,12 +128,20 @@ const ProductCards = () => {
                         <span className={styles.price}>
                             {product.price} {product.currency}
                         </span>
+                        <button
+                            onClick={() => toggleFavorites(product)}
+                            className={styles.priceButton}
+                        >
+                            <HeartIcon
+                                className={`${styles.icon} ${
+                                    favorite ? styles.active : ""
+                                }`}
+                            />
+                        </button>
                     </div>
                     <div className={styles.buttonContainer}>
                         <Button
                             size="small"
-
-
                             onClick={() => addFormCart(product)}
                         >
                             Купить

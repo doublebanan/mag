@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { useCartStore } from "../../features/cart/model/useCartStore";
 
 import styles from "./BottomNav.module.css";
 
@@ -8,6 +9,7 @@ import UserIcon from "../../shared/assets/icons/user.svg?react";
 
 export const BottomNav = () => {
     const { pathname } = useLocation();
+    const count = useCartStore((state) => state.getTotalCount());
 
     return (
         <nav className={styles.nav}>
@@ -23,7 +25,10 @@ export const BottomNav = () => {
                 className={pathname === "/cart" ? styles.active : ""}
             >
                 <TrashIcon className={styles.icon} />
-                <div className={styles.title}>корзина</div>
+                <div className={styles.title}>
+                    {count > 0 && <span className={styles.badge}>{count}</span>}
+                    корзина
+                </div>
             </Link>
             <Link
                 to="/profile"

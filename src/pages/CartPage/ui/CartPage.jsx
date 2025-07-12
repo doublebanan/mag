@@ -1,10 +1,8 @@
 import { CartList } from "../../../features/cart/ui/CartList";
 import { useCartStore } from "../../../features/cart/model/useCartStore";
-import { Button } from "../../../shared/assets/ui/Button/Button";
+import { CartEmpty } from "./CartEmpty";
 
 import styles from "./CartPage.module.css";
-
-import SadIcon from "../../../shared/assets/icons/sad.svg?react";
 
 export const CartPage = () => {
     const sum = useCartStore((state) => state.getTotalPrice());
@@ -18,11 +16,7 @@ export const CartPage = () => {
             <div>
                 <CartList />
                 {current === 0 ? (
-                    <div className={styles.cartNull}>
-                        <h2 className={styles.subTitle}>Корзина пуста...</h2>
-                        <SadIcon className={styles.iconSad} />
-                        <Button size="medium">Перейти в каталог</Button>
-                    </div>
+                    <CartEmpty />
                 ) : (
                     <>
                         <div className={styles.promoSection}>

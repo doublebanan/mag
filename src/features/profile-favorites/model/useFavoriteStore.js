@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
-export const useCartStore = create((set, get) => ({
-    cart: [
+export const useFavoriteStore = create((set, get) => ({
+    favorites: [
         {
-            id: "11",
+            id: "13",
             name: "Вентилятор Aceline UWTF-4 голубой",
             price: 399,
             currency: "₽",
@@ -19,7 +19,7 @@ export const useCartStore = create((set, get) => ({
             compareEnabled: true,
         },
         {
-            id: "10",
+            id: "12",
             name: "Вентилятор Scarlett SC-DF111595 черный",
             price: 599,
             currency: "₽",
@@ -35,29 +35,34 @@ export const useCartStore = create((set, get) => ({
             compareEnabled: true,
         },
     ],
-    // добавить товар в корзину
-    addToCart: (product) => {
-        set((state) => ({ cart: [...state.cart, { ...product }] }));
+    // добавить товар в избранное
+    addToFavorites: (product) => {
+        set((state) => ({ favorites: [...state.favorites, { ...product }] }));
     },
-    // удалить товар из корзины
-
-    removeFromCart: (productId) => {
+    // удалить товар из избранного
+    removeFromFavorites: (productId) => {
         set((state) => ({
-            cart: state.cart.filter((item) => item.id !== productId),
+            favorites: state.favorites.filter((item) => item.id !== productId),
         }));
     },
-
-    clearCart: () => {
-        set({ cart: [] });
+    isFavorite: (productId) => {
+        return get().favorites.some((item) => item.id === productId);
     },
 
-    // подсчет общей стоимости
+    toggleFavorite: (product) => {
+        const state = get();
+        const exists = state.favorites.some((item) => item.id === product.id);
 
-    getTotalPrice: () => {
-        return get().cart.reduce((total, item) => total + item.price, 0);
-    },
-
-    getTotalCount: () => {
-        return get().cart.length;
+        if (exists) {
+            set({
+                favorites: state.favorites.filter(
+                    (item) => item.id !== product.id
+                ),
+            });
+        } else {
+            set({
+                favorites: [...state.favorites, { ...product }],
+            });
+        }
     },
 }));

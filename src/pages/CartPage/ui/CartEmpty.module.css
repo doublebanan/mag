@@ -1,0 +1,23 @@
+.subTitle {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text);
+}
+
+.iconSad {
+    width: 100px;
+    height: 100px;
+    color: var(--blue);
+    margin: 10px auto;
+}
+
+.cartNull {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+}

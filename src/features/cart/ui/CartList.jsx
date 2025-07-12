@@ -1,4 +1,5 @@
 import { useCartStore } from "../model/useCartStore";
+import { useFavoriteStore } from "../../profile-favorites/model/useFavoriteStore";
 
 import styles from "./CartList.module.css";
 
@@ -8,10 +9,15 @@ import HeartIcon from "../../../shared/assets/icons/heart.svg?react";
 export const CartList = () => {
     const cart = useCartStore((state) => state.cart);
     const removeFromCart = useCartStore((state) => state.removeFromCart);
+    const toggleFavorites = useFavoriteStore((state) => state.toggleFavorite);
+    const favorites = useFavoriteStore((state) => state.favorites);
 
     return (
         <ul className={styles.cards}>
             {cart.map((product) => {
+                const favorite = favorites.some(
+                    (item) => item.id === product.id
+                );
                 return (
                     <li key={product.id} className={styles.card}>
                         <div className={styles.imageContainer}>
@@ -32,8 +38,15 @@ export const CartList = () => {
                                     {product.price} {product.currency}
                                 </span>
                             </div>
-                            <button className={styles.button}>
-                                <HeartIcon className={styles.icon} />
+                            <button
+                                onClick={() => toggleFavorites(product)}
+                                className={styles.button}
+                            >
+                                <HeartIcon
+                                    className={`${styles.icon} ${
+                                        favorite ? styles.active : ""
+                                    }`}
+                                />
                             </button>
                             <button
                                 onClick={() => removeFromCart(product.id)}
