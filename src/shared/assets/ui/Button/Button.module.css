@@ -23,12 +23,25 @@
     font-size: 12px;
     margin: 5px 0;
     border-radius: 4px;
+    width: 95px;
+}
+
+.small:hover {
+    background-color: transparent;
+    color: var(--blue);
+    border: 1px solid #75cbf3;
 }
 
 .medium {
     padding: 12px 24px;
     font-size: 14px;
     font-weight: 300;
+}
+
+.active {
+    background-color: var(--blue);
+    color: var(--text);
+    border: 1px solid transparent;
 }
 
 .medium:hover {

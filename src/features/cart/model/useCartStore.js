@@ -1,40 +1,9 @@
 import { create } from "zustand";
+import { mockProducts } from "../../../shared/lib/mocks/product";
 
 export const useCartStore = create((set, get) => ({
-    cart: [
-        {
-            id: "11",
-            name: "Вентилятор Aceline UWTF-4 голубой",
-            price: 399,
-            currency: "₽",
-            category: "Вентиляторы",
-            isHit: true,
-            rating: {
-                value: 4.7,
-            },
+    cart: [mockProducts[6]], // Инициализация с одним товаром для примера
 
-            images: [
-                "https://c.dns-shop.ru/thumb/st1/fit/320/250/26d0e711aaa09113c141cbf64614aa49/0743b8c34a035b464d83f8528d9f20ea1672a862c70e23db028fdcbbbc75a4ae.jpg",
-            ],
-            compareEnabled: true,
-        },
-        {
-            id: "10",
-            name: "Вентилятор Scarlett SC-DF111595 черный",
-            price: 599,
-            currency: "₽",
-            category: "Вентиляторы",
-            isHit: false,
-            rating: {
-                value: 4.56,
-            },
-
-            images: [
-                "https://c.dns-shop.ru/thumb/st1/fit/320/250/96aaa37c0164d62ecbb6338dd50f7df6/1077aeed794c9352b386674d678278e53c22f912616768ba6935a86f1cda4585.jpg",
-            ],
-            compareEnabled: true,
-        },
-    ],
     // добавить товар в корзину
     addToCart: (product) => {
         set((state) => ({ cart: [...state.cart, { ...product }] }));
@@ -59,5 +28,23 @@ export const useCartStore = create((set, get) => ({
 
     getTotalCount: () => {
         return get().cart.length;
+    },
+
+    isActive: (productId) => {
+        return get().cart.some((item) => item.id === productId);
+    },
+
+    toggleCart: (product) => {
+        const state = get();
+        const exists = state.cart.some((item) => item.id === product.id);
+        if (exists) {
+            set({
+                cart: state.cart.filter((item) => item.id !== product.id),
+            });
+        } else {
+            set({
+                cart: [...state.cart, { ...product }],
+            });
+        }
     },
 }));

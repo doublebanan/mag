@@ -1,0 +1,96 @@
+.page {
+    padding: 0 16px;
+}
+
+.title {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: var(--text);
+}
+
+.imagesWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image {
+    width: 80%;
+    max-width: 320px;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.priceTitle {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.ratingTitle,
+.category {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.notFound {
+    padding: 32px;
+    text-align: center;
+    font-size: 18px;
+    color: red;
+}
+
+.icon {
+    width: 40px;
+
+    color: var(--blue);
+}
+
+.button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.active {
+    color: red;
+}
+
+.back {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+.valueBlock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.subTitle {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.activeBtn {
+    background-color: transparent;
+    color: red;
+    border: 1px solid red;
+}
+
+.btnBlock {
+    display: flex;
+    justify-content: center;
+}
+
+.buttonBig {
+    width: 200px;
+}
