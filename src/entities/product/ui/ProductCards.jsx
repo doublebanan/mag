@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import { Button } from "../../../shared/assets/ui/Button/Button";
@@ -10,7 +10,7 @@ import styles from "./ProductCards.module.css";
 
 import HeartIcon from "../../../shared/assets/icons/heart.svg?react";
 
-const ProductCards = () => {
+const ProductCards = ({ category }) => {
     const cart = useCartStore((state) => state.cart);
     const toggleCart = useCartStore((state) => state.toggleCart);
     const inProductByCart = useCartStore((state) => state.isActive);
@@ -18,7 +18,14 @@ const ProductCards = () => {
     const toggleFavorites = useFavoriteStore((state) => state.toggleFavorite);
     const favorites = useFavoriteStore((state) => state.favorites);
 
-    const [products, setProducts] = useState(mockProducts);
+    const filteredProducts = useMemo(() => {
+        if (!category) return mockProducts;
+        return category
+            ? mockProducts.filter(
+                  (p) => p.slug.toLowerCase() === category.toLowerCase()
+              )
+            : mockProducts;
+    }, [category]);
 
     function onProducts(items) {
         return items.map((product, i) => {
@@ -79,7 +86,7 @@ const ProductCards = () => {
             );
         });
     }
-    const items = onProducts(products);
+    const items = onProducts(filteredProducts);
 
     return <>{items}</>;
 };

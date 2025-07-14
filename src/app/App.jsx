@@ -16,7 +16,7 @@ function App() {
                 <main className={style.scroll}>
                     <Routes>
                         <Route path="/product/:id" element={<ProductPage />} />
-                        <Route path="/catalog" element={<CatalogPage />} />
+                        <Route path="/catalog/*" element={<CatalogPage />} />
                         <Route path="/cart" element={<CartPage />} />
                         <Route path="/profile" element={<ProfilePage />} />
                     </Routes>
