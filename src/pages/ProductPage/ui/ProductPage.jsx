@@ -1,11 +1,13 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import clsx from "clsx";
 
 import { useCartStore } from "../../../features/cart/model/useCartStore";
 import { useFavoriteStore } from "../../../features/profile-favorites/model/useFavoriteStore";
-import { mockProducts } from "../../../shared/lib/mocks/product";
-import { Button } from "../../../shared/assets/ui/Button/Button";
+
+import { Button } from "../../../shared/assets/Button/Button";
 import { useGoToCatalog } from "../../../shared/lib/goToCatalog";
+import { useProductService } from "../../../shared/hooks/useProductServise";
 
 import BackIcon from "../../../shared/assets/icons/back.svg?react";
 import HeartIcon from "../../../shared/assets/icons/heart.svg?react";
@@ -14,22 +16,35 @@ import styles from "./ProductPage.module.css";
 
 export const ProductPage = () => {
     const { id } = useParams();
-    const product = mockProducts.find((item) => item.id === id);
     const goToCatalog = useGoToCatalog();
+
+    const { loading, error, getProduct, clearError } = useProductService();
+
+    const [product, setProduct] = useState(undefined);
 
     const cart = useCartStore((state) => state.cart);
     const toggleCart = useCartStore((state) => state.toggleCart);
     const inProductByCart = useCartStore((state) => state.isActive);
 
     const toggleFavorites = useFavoriteStore((state) => state.toggleFavorite);
+
+    //Ошибка где то тут
     const favorites = useFavoriteStore((state) => state.favorites);
 
-    const favorite = favorites.some((item) => item.id === product.id);
-    const inCart = inProductByCart(product.id);
+    useEffect(() => {
+        clearError();
+        setProduct(undefined);
+        getProduct(id)
+            .then((data) => setProduct(data || null))
+            .catch(() => setProduct(null));
+    }, [id, getProduct, clearError]);
 
     if (!product) {
         return <div className={styles.notFound}>Товар не найден</div>;
     }
+
+    const favorite = favorites.some((item) => item.id === product.id);
+    const inCart = inProductByCart(product.id);
 
     return (
         <>
@@ -49,31 +64,28 @@ export const ProductPage = () => {
                 </button>
             </div>
             <div className={styles.page}>
-                <h2 className={styles.title}>{product.name}</h2>
+                <h2 className={styles.title}>{product.title}</h2>
                 <div className={styles.imagesWrapper}>
                     <img
-                        src={product.images[0]}
-                        alt={product.name}
+                        src={product.image}
+                        alt={product.title}
                         className={styles.image}
                     />
                 </div>
                 <p className={styles.subTitle}>
-                    Описание: Вентилятор Aceline UWTF-4 потребляет 2.5 Вт и
-                    получает питание от порта USB.
+                    Описание: Можно добавить позже..
                 </p>
                 <div className={styles.valueBlock}>
                     <div className={styles.rating}>
                         <p className={styles.ratingTitle}>
-                            Рейтинг: {product.rating.value}
+                            Рейтинг: {product.rating}
                         </p>
                         <p className={styles.category}>
                             Категория: {product.category}
                         </p>
                     </div>
                     <div className={styles.price}>
-                        <p className={styles.priceTitle}>
-                            {product.price} {product.currency}
-                        </p>
+                        <p className={styles.priceTitle}>{product.price} ₽</p>
                     </div>
                 </div>
                 <div className={styles.btnBlock}>

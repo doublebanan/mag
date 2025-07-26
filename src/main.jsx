@@ -6,11 +6,10 @@ import App from "./app/App";
 import styles from "./index.module.css";
 
 createRoot(document.getElementById("root")).render(
-    <StrictMode>
-        <div className={styles.container}>
-            <div className={styles.app}>
-                <App />
-            </div>
+    // <StrictMode>
+    <div className={styles.container}>
+        <div className={styles.app}>
+            <App />
         </div>
-    </StrictMode>
+    </div>
 );

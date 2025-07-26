@@ -1,4 +1,4 @@
-import { Button } from "../../../shared/assets/ui/Button/Button";
+import { Button } from "../../../shared/assets/Button/Button";
 import { useGoToCatalog } from "../../../shared/lib/goToCatalog";
 
 import styles from "./CartEmpty.module.css";

@@ -1,5 +1,5 @@
 import styles from "./profile-payments.module.css";
-import { Button } from "../../../shared/assets/ui/Button/Button";
+import { Button } from "../../../shared/assets/Button/Button";
 
 export const PaymentMethods = () => {
     return (

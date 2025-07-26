@@ -1,8 +1,23 @@
 import { create } from "zustand";
-import { mockProducts } from "../../../shared/lib/mocks/product";
+
+import { fetchProduct } from "../../../shared/hooks/useProductServise";
 
 export const useCartStore = create((set, get) => ({
-    cart: [mockProducts[6]], // Инициализация с одним товаром для примера
+    cart: [],
+    loading: false,
+    error: null,
+
+    initCart: async (id) => {
+        set({ loading: true, error: null });
+        try {
+            const product = await fetchProduct(id);
+            set({ cart: [product] });
+        } catch (e) {
+            set({ error: e.message });
+        } finally {
+            set({ loading: false });
+        }
+    },
 
     // добавить товар в корзину
     addToCart: (product) => {

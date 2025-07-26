@@ -22,20 +22,20 @@ export const CartList = () => {
                     <li key={product.id} className={styles.card}>
                         <div className={styles.imageContainer}>
                             <img
-                                src={product.images[0]}
-                                alt={product.name}
+                                src={product.image}
+                                alt={product.title}
                                 className={styles.image}
                             />
                         </div>
                         <div className={styles.productMain}>
                             <h3 className={styles.productTitle}>
-                                {product.name}
+                                {product.title}
                             </h3>
                         </div>
                         <div className={styles.priceBlock}>
                             <div className={styles.priceContainer}>
                                 <span className={styles.currentPrice}>
-                                    {product.price} {product.currency}
+                                    {product.price} P
                                 </span>
                             </div>
                             <button
