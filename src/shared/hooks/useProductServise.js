@@ -10,11 +10,15 @@ export async function fetchProduct(id) {
 }
 
 export async function fetchProducts(category) {
+    console.log("fetchProducts");
+    console.log("fetchProducts:", category);
     let url = `${_apiBase}/get_products/`;
     if (category) url += `?category=${encodeURIComponent(category)}`;
     const res = await fetch(url);
     if (!res.ok) throw new Error(`Fetch error ${res.status}`);
-    return res.json();
+    const data = await res.json();
+    console.log("data из fetchProducts:", data);
+    return data;
 }
 
 export const useProductService = () => {

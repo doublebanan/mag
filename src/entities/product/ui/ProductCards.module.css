@@ -112,3 +112,24 @@
     text-decoration: none;
     color: var(--text);
 }
+
+.qtyBox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+.qtyBtn {
+    border: none;
+    background: #eee;
+    padding: 4px 10px;
+    font-size: 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.qtyNumber {
+    min-width: 24px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--textGray);
+}

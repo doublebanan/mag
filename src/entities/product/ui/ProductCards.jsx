@@ -1,23 +1,25 @@
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-
-import { useProductService } from "../../../shared/hooks/useProductServise";
 
 import { Button } from "../../../shared/assets/Button/Button";
 import { useCartStore } from "../../../features/cart/model/useCartStore";
 import { useFavoriteStore } from "../../../features/profile-favorites/model/useFavoriteStore";
+import { useProductsStore } from "../model/useProductStore";
 
 import styles from "./ProductCards.module.css";
 
 import HeartIcon from "../../../shared/assets/icons/heart.svg?react";
 
 const ProductCards = ({ category }) => {
+    const tgId = 1;
+
+    const { loadProducts, getProducts, loading, error } = useProductsStore();
+
     //начало для запроса
-    const { loading, error, getAllProducts, clearError } = useProductService();
-    const [products, setProducts] = useState(null);
 
     const cart = useCartStore((state) => state.cart);
-    const toggleCart = useCartStore((state) => state.toggleCart);
+    const addToCart = useCartStore((state) => state.addToCart);
+    const removeFromCart = useCartStore((state) => state.removeFromCart);
     const inProductByCart = useCartStore((state) => state.isActive);
 
     const toggleFavorites = useFavoriteStore((state) => state.toggleFavorite);
@@ -25,12 +27,12 @@ const ProductCards = ({ category }) => {
 
     // эффект
     useEffect(() => {
-        clearError();
-        setProducts(null);
-        getAllProducts(category)
-            .then((data) => setProducts(data))
-            .catch(() => setProducts([]));
-    }, [getAllProducts, clearError, category]);
+        loadProducts(category);
+        console.log("hi");
+    }, [category, loadProducts]);
+
+    const products = getProducts(category);
+    console.log(products);
 
     const filtered = useMemo(() => {
         if (products === null) return null; // ещё не загружено
@@ -53,6 +55,7 @@ const ProductCards = ({ category }) => {
     return (
         <ul>
             {filtered.map((product) => {
+                const count = cart[product.id] || 0;
                 const inCart = inProductByCart(product.id);
                 const favorite = favorites.some(
                     (item) => item.id === product.id
@@ -89,15 +92,37 @@ const ProductCards = ({ category }) => {
                                 />
                             </button>
                         </div>
-                        <div className={styles.buttonContainer}>
-                            <Button
-                                size="small"
-                                className={inCart ? styles.activeBtn : ""}
-                                onClick={() => toggleCart(product)}
-                            >
-                                {inCart ? "В корзине" : "Купить"}
-                            </Button>
-                        </div>
+                        {count === 0 ? (
+                            <div className={styles.buttonContainer}>
+                                <Button
+                                    size="small"
+                                    className={inCart ? styles.activeBtn : ""}
+                                    onClick={() => addToCart(tgId, product.id)}
+                                >
+                                    Купить
+                                </Button>
+                            </div>
+                        ) : (
+                            <div className={styles.qtyBox}>
+                                <button
+                                    onClick={() =>
+                                        removeFromCart(tgId, product.id)
+                                    }
+                                    className={styles.qtyBtn}
+                                >
+                                    -
+                                </button>
+                                <span className={styles.qtyNumber}>
+                                    {count}
+                                </span>
+                                <button
+                                    onClick={() => addToCart(tgId, product.id)}
+                                    className={styles.qtyBtn}
+                                >
+                                    +
+                                </button>
+                            </div>
+                        )}
                     </li>
                 );
             })}

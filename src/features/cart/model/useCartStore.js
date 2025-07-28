@@ -1,17 +1,19 @@
 import { create } from "zustand";
 
-import { fetchProduct } from "../../../shared/hooks/useProductServise";
+import { cartService } from "../api/apiCart";
 
 export const useCartStore = create((set, get) => ({
-    cart: [],
+    cart: {},
     loading: false,
     error: null,
 
-    initCart: async (id) => {
+    //получить корзину ид тг или пустую
+
+    fetchCart: async (tg_id) => {
         set({ loading: true, error: null });
         try {
-            const product = await fetchProduct(id);
-            set({ cart: [product] });
+            const data = await cartService.getCart(tg_id);
+            set({ cart: data.products || {} });
         } catch (e) {
             set({ error: e.message });
         } finally {
@@ -19,47 +21,41 @@ export const useCartStore = create((set, get) => ({
         }
     },
 
+    getCart: () => get().cart || {},
+
     // добавить товар в корзину
-    addToCart: (product) => {
-        set((state) => ({ cart: [...state.cart, { ...product }] }));
+    addToCart: async (tg_id, prod_id) => {
+        set({ loading: true, error: null });
+        try {
+            await cartService.addToCart(tg_id, prod_id);
+
+            await get().fetchCart(tg_id);
+        } catch (e) {
+            set({ error: e.message });
+        } finally {
+            set({ loading: false });
+        }
     },
     // удалить товар из корзины
 
-    removeFromCart: (productId) => {
-        set((state) => ({
-            cart: state.cart.filter((item) => item.id !== productId),
-        }));
-    },
-
-    clearCart: () => {
-        set({ cart: [] });
-    },
-
-    // подсчет общей стоимости
-
-    getTotalPrice: () => {
-        return get().cart.reduce((total, item) => total + item.price, 0);
+    removeFromCart: async (tg_id, prod_id) => {
+        set({ loading: true, error: null });
+        try {
+            await cartService.removeFromCart(tg_id, prod_id);
+            await get().fetchCart(tg_id);
+        } catch (e) {
+            set({ error: e.message });
+        } finally {
+            set({ loading: false });
+        }
     },
 
     getTotalCount: () => {
-        return get().cart.length;
+        const cart = get().cart;
+        return Object.values(cart).reduce((sum, qty) => sum + qty, 0);
     },
 
     isActive: (productId) => {
-        return get().cart.some((item) => item.id === productId);
-    },
-
-    toggleCart: (product) => {
-        const state = get();
-        const exists = state.cart.some((item) => item.id === product.id);
-        if (exists) {
-            set({
-                cart: state.cart.filter((item) => item.id !== product.id),
-            });
-        } else {
-            set({
-                cart: [...state.cart, { ...product }],
-            });
-        }
+        return !!get().cart[productId];
     },
 }));
