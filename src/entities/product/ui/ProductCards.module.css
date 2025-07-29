@@ -1,12 +1,19 @@
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    /* grid-template-columns: 1fr 1fr; */
+}
+
 .card {
     display: grid;
-    grid-template-columns: 90px 1fr auto;
-    grid-template-rows: auto auto;
+    grid-template-columns: 90px 1fr;
+    grid-template-rows: 90px auto 40px;
     gap: 5px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 10px;
-    margin-bottom: 10px;
+
     font-family: Arial, sans-serif;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     background-color: var(--white);
@@ -14,28 +21,36 @@
 
 .imageContainer {
     grid-column: 1;
-    grid-row: 1 / span 2;
+    grid-row: 1 / 2;
     align-self: center;
 }
 .imageContainer img {
-    width: 80px;
+    width: 70px;
 }
 .buttonContainer {
-    grid-column: 3;
-    grid-row: 2;
+    grid-column: 1/3;
+    grid-row: 3;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+}
+
+.box {
+    grid-column: 1/3;
+    grid-row: 3;
+    display: flex;
+    justify-content: center;
 }
 
 .priceContainer {
-    grid-column: 3/4;
+    grid-column: 2/3;
     grid-row: 1/2;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
+
 .meta {
-    grid-column: 2/3;
+    grid-column: 1/3;
     grid-row: 2 / 3;
     font-size: 12px;
     color: var(--textGray);
@@ -51,7 +66,7 @@
 }
 
 .name {
-    font-size: 12px;
+    font-size: 11px;
     margin: 0 0 8px 0;
     color: var(--text);
 
@@ -66,7 +81,7 @@
 }
 
 .price {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: bold;
     color: var(--text);
     margin-bottom: 5px;
@@ -111,25 +126,4 @@
 .link {
     text-decoration: none;
     color: var(--text);
-}
-
-.qtyBox {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: center;
-}
-.qtyBtn {
-    border: none;
-    background: #eee;
-    padding: 4px 10px;
-    font-size: 18px;
-    border-radius: 6px;
-    cursor: pointer;
-}
-.qtyNumber {
-    min-width: 24px;
-    text-align: center;
-    font-weight: bold;
-    color: var(--textGray);
 }

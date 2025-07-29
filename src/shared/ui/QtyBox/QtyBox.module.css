@@ -1,0 +1,22 @@
+.qtyBox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+.qtyBtn {
+    border: none;
+    width: 25px;
+    height: 25px;
+    background: #eee;
+
+    font-size: 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.qtyNumber {
+    min-width: 22px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--textGray);
+}

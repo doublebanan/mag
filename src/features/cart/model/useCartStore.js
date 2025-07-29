@@ -1,5 +1,6 @@
 import { create } from "zustand";
 
+import { useProductsStore } from "../../../entities/product/model/useProductStore";
 import { cartService } from "../api/apiCart";
 
 export const useCartStore = create((set, get) => ({
@@ -57,5 +58,16 @@ export const useCartStore = create((set, get) => ({
 
     isActive: (productId) => {
         return !!get().cart[productId];
+    },
+
+    getTotalPrice: () => {
+        const cart = get().cart;
+        const productsById = useProductsStore.getState().productsById;
+        console.log(cart, productsById);
+        return Object.entries(cart).reduce((sum, [id, count]) => {
+            const product = productsById[id];
+            const price = product ? Number(product.price) : 0;
+            return sum + price * count;
+        }, 0);
     },
 }));

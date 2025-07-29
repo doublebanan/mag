@@ -1,10 +1,12 @@
 import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
-import { Button } from "../../../shared/assets/Button/Button";
 import { useCartStore } from "../../../features/cart/model/useCartStore";
 import { useFavoriteStore } from "../../../features/profile-favorites/model/useFavoriteStore";
 import { useProductsStore } from "../model/useProductStore";
+
+import { Button } from "../../../shared/assets/Button/Button";
+import { QtyBox } from "../../../shared/ui/QtyBox/QtyBox";
 
 import styles from "./ProductCards.module.css";
 
@@ -53,7 +55,7 @@ const ProductCards = ({ category }) => {
     }
 
     return (
-        <ul>
+        <ul className={styles.cards}>
             {filtered.map((product) => {
                 const count = cart[product.id] || 0;
                 const inCart = inProductByCart(product.id);
@@ -69,7 +71,7 @@ const ProductCards = ({ category }) => {
                                 className={styles.image}
                             />
                         </div>
-                        <div className={styles.info}>
+                        <div className={styles.meta}>
                             <Link
                                 className={styles.link}
                                 to={`/product/${product.id}`}
@@ -103,24 +105,16 @@ const ProductCards = ({ category }) => {
                                 </Button>
                             </div>
                         ) : (
-                            <div className={styles.qtyBox}>
-                                <button
-                                    onClick={() =>
+                            <div className={styles.box}>
+                                <QtyBox
+                                    count={count}
+                                    onDecrement={() =>
                                         removeFromCart(tgId, product.id)
                                     }
-                                    className={styles.qtyBtn}
-                                >
-                                    -
-                                </button>
-                                <span className={styles.qtyNumber}>
-                                    {count}
-                                </span>
-                                <button
-                                    onClick={() => addToCart(tgId, product.id)}
-                                    className={styles.qtyBtn}
-                                >
-                                    +
-                                </button>
+                                    onIncrement={() =>
+                                        addToCart(tgId, product.id)
+                                    }
+                                />
                             </div>
                         )}
                     </li>

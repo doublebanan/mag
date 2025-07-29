@@ -3,25 +3,16 @@
 import { CartList } from "../../../features/cart/ui/CartList";
 import { useCartStore } from "../../../features/cart/model/useCartStore";
 import { CartEmpty } from "./CartEmpty";
-// import { useProductsStore } from "../../../entities/product/model/useProductStore";
 
 import styles from "./CartPage.module.css";
 
 export const CartPage = () => {
-    // const tgId = 1;
-    // const fetchCart = useCartStore((state) => state.fetchCart);
-    // const loadProducts = useProductsStore((state) => state.loadProducts);
-    // const cart = useCartStore((state) => state.cart);
-
-    // useEffect(() => {
-    //     // Загрузка всей корзины и продуктов при открытии страницы
-    //     fetchCart(tgId);
-    //     loadProducts(); // если нужен весь каталог
-    // }, [fetchCart, loadProducts, tgId]);
-    const sum = 10;
+    const sum = useCartStore((state) => state.getTotalPrice());
     const current = useCartStore((state) => state.getTotalCount());
     const sale = 70;
     const finalPrice = sum === 0 ? 0 : sum - sale;
+
+    console.log(sum);
 
     return (
         <div>
