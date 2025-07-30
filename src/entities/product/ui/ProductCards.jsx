@@ -5,6 +5,8 @@ import { useCartStore } from "../../../features/cart/model/useCartStore";
 import { useFavoriteStore } from "../../../features/profile-favorites/model/useFavoriteStore";
 import { useProductsStore } from "../model/useProductStore";
 
+import { Skeleton } from "../../../shared/ui/Skeleton/Skeleton";
+
 import { Button } from "../../../shared/assets/Button/Button";
 import { QtyBox } from "../../../shared/ui/QtyBox/QtyBox";
 
@@ -15,12 +17,15 @@ import HeartIcon from "../../../shared/assets/icons/heart.svg?react";
 const ProductCards = ({ category }) => {
     const tgId = 1;
 
+    const actionLoading = useCartStore((state) => state.actionLoading);
+
     const { loadProducts, getProducts, loading, error } = useProductsStore();
 
     //начало для запроса
 
     const cart = useCartStore((state) => state.cart);
     const addToCart = useCartStore((state) => state.addToCart);
+
     const removeFromCart = useCartStore((state) => state.removeFromCart);
     const inProductByCart = useCartStore((state) => state.isActive);
 
@@ -37,21 +42,34 @@ const ProductCards = ({ category }) => {
     console.log(products);
 
     const filtered = useMemo(() => {
-        if (products === null) return null; // ещё не загружено
+        if (products === null) return null;
         if (!category) return products;
         return products.filter(
             (p) => p.subtitle.toLowerCase() === category.toLowerCase()
         );
     }, [products, category]);
 
-    if (loading || products === null) {
-        return <p>Загрузка товаров…</p>;
+    if (loading) {
+        return (
+            <ul className={styles.cards}>
+                <li className={styles.card}>
+                    <Skeleton height={100} />
+                </li>
+                <li className={styles.card}>
+                    <Skeleton height={100} />
+                </li>
+                <li className={styles.card}>
+                    <Skeleton height={100} />
+                </li>
+                <li className={styles.card}>
+                    <Skeleton height={100} />
+                </li>
+            </ul>
+        );
     }
+
     if (error) {
         return <p className={styles.error}>Ошибка загрузки: {error}</p>;
-    }
-    if (filtered.length === 0) {
-        return <p>Товаров в категории «{category || "все"}» не найдено.</p>;
     }
 
     return (
@@ -114,6 +132,7 @@ const ProductCards = ({ category }) => {
                                     onIncrement={() =>
                                         addToCart(tgId, product.id)
                                     }
+                                    disabled={actionLoading}
                                 />
                             </div>
                         )}

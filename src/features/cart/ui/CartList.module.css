@@ -24,6 +24,7 @@
 
 .productMain {
     margin-bottom: 16px;
+    margin-left: 10px;
     grid-column: 2/3;
 }
 

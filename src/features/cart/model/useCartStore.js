@@ -6,19 +6,20 @@ import { cartService } from "../api/apiCart";
 export const useCartStore = create((set, get) => ({
     cart: {},
     loading: false,
+    actionLoading: false,
     error: null,
 
     //получить корзину ид тг или пустую
 
-    fetchCart: async (tg_id) => {
-        set({ loading: true, error: null });
+    fetchCart: async (tg_id, isInitial = false) => {
+        if (isInitial) set({ loading: true, error: null });
         try {
             const data = await cartService.getCart(tg_id);
             set({ cart: data.products || {} });
         } catch (e) {
             set({ error: e.message });
         } finally {
-            set({ loading: false });
+            if (isInitial) set({ loading: false });
         }
     },
 
@@ -26,28 +27,28 @@ export const useCartStore = create((set, get) => ({
 
     // добавить товар в корзину
     addToCart: async (tg_id, prod_id) => {
-        set({ loading: true, error: null });
+        set({ actionLoading: true });
         try {
             await cartService.addToCart(tg_id, prod_id);
 
-            await get().fetchCart(tg_id);
+            await get().fetchCart(tg_id, false);
         } catch (e) {
             set({ error: e.message });
         } finally {
-            set({ loading: false });
+            set({ actionLoading: false });
         }
     },
     // удалить товар из корзины
 
     removeFromCart: async (tg_id, prod_id) => {
-        set({ loading: true, error: null });
+        set({ actionLoading: true });
         try {
             await cartService.removeFromCart(tg_id, prod_id);
-            await get().fetchCart(tg_id);
+            await get().fetchCart(tg_id, false);
         } catch (e) {
             set({ error: e.message });
         } finally {
-            set({ loading: false });
+            set({ actionLoading: false });
         }
     },
 

@@ -1,5 +1,3 @@
-// import { useEffect } from "react";
-
 import { CartList } from "../../../features/cart/ui/CartList";
 import { useCartStore } from "../../../features/cart/model/useCartStore";
 import { CartEmpty } from "./CartEmpty";
@@ -19,7 +17,7 @@ export const CartPage = () => {
             <h2 className={styles.title}>Корзина</h2>
             <div>
                 <CartList />
-                {/* {Object.keys(cart).length === 0 && <CartEmpty />} */}
+
                 {current === 0 ? (
                     <CartEmpty />
                 ) : (

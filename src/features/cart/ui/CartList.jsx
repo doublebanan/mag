@@ -4,7 +4,9 @@ import { useCartStore } from "../model/useCartStore";
 import { useFavoriteStore } from "../../profile-favorites/model/useFavoriteStore";
 import { useProductsStore } from "../../../entities/product/model/useProductStore";
 
-import CrossIcon from "../../../shared/assets/icons/cross.svg?react";
+import { Skeleton } from "../../../shared/ui/Skeleton/Skeleton";
+
+// import CrossIcon from "../../../shared/assets/icons/cross.svg?react";
 import HeartIcon from "../../../shared/assets/icons/heart.svg?react";
 
 import { QtyBox } from "../../../shared/ui/QtyBox/QtyBox";
@@ -15,17 +17,20 @@ export const CartList = () => {
     const tgId = 1;
 
     const fetchCart = useCartStore((state) => state.fetchCart);
+    const loading = useCartStore((state) => state.loading);
+    const actionLoading = useCartStore((state) => state.actionLoading);
     const loadProducts = useProductsStore((state) => state.loadProducts);
 
     useEffect(() => {
-        fetchCart(tgId);
+        fetchCart(tgId, false);
         loadProducts();
-    }, [fetchCart, loadProducts, tgId]);
+    }, []);
 
     const getProductById = useProductsStore((state) => state.getProductById);
 
     const cart = useCartStore((state) => state.cart);
     const addToCart = useCartStore((state) => state.addToCart);
+    const current = useCartStore((state) => state.getTotalCount());
     const removeFromCart = useCartStore((state) => state.removeFromCart);
 
     const toggleFavorites = useFavoriteStore((state) => state.toggleFavorite);
@@ -38,6 +43,16 @@ export const CartList = () => {
             return product ? { ...product, qty } : null;
         })
         .filter(Boolean);
+
+    if (loading && current > 0) {
+        return (
+            <ul className={styles.cards}>
+                <li className={styles.card}>
+                    <Skeleton height={60} />
+                </li>
+            </ul>
+        );
+    }
 
     return (
         <ul className={styles.cards}>
@@ -67,6 +82,7 @@ export const CartList = () => {
                                     removeFromCart(tgId, product.id)
                                 }
                                 onIncrement={() => addToCart(tgId, product.id)}
+                                disabled={actionLoading}
                             />
                             <div className={styles.priceContainer}>
                                 <span className={styles.currentPrice}>
