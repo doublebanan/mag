@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
+
 import { useParams } from "react-router-dom";
 import clsx from "clsx";
 
+import { useSmartGoBack } from "../../../shared/lib/useSmartGoBack";
 import { useCartStore } from "../../../features/cart/model/useCartStore";
 import { useFavoriteStore } from "../../../features/profile-favorites/model/useFavoriteStore";
 
 import { Button } from "../../../shared/assets/Button/Button";
-import { useGoToCatalog } from "../../../shared/lib/goToCatalog";
+
 import { useProductService } from "../../../shared/hooks/useProductServise";
 
 import BackIcon from "../../../shared/assets/icons/back.svg?react";
@@ -15,10 +17,11 @@ import HeartIcon from "../../../shared/assets/icons/heart.svg?react";
 import styles from "./ProductPage.module.css";
 
 export const ProductPage = () => {
-    const { id } = useParams();
-    const goToCatalog = useGoToCatalog();
+    const goBack = useSmartGoBack();
 
-    const { loading, error, getProduct, clearError } = useProductService();
+    const { id } = useParams();
+
+    const { getProduct, clearError } = useProductService();
 
     const [product, setProduct] = useState(undefined);
 
@@ -49,7 +52,7 @@ export const ProductPage = () => {
     return (
         <>
             <div className={styles.back}>
-                <button onClick={goToCatalog} className={styles.button}>
+                <button onClick={goBack} className={styles.button}>
                     <BackIcon className={styles.icon} />
                 </button>
                 <button

@@ -21,8 +21,6 @@ const ProductCards = ({ category }) => {
 
     const { loadProducts, getProducts, loading, error } = useProductsStore();
 
-    //начало для запроса
-
     const cart = useCartStore((state) => state.cart);
     const addToCart = useCartStore((state) => state.addToCart);
 
@@ -39,7 +37,6 @@ const ProductCards = ({ category }) => {
     }, [category, loadProducts]);
 
     const products = getProducts(category);
-    console.log(products);
 
     const filtered = useMemo(() => {
         if (products === null) return null;
@@ -93,6 +90,7 @@ const ProductCards = ({ category }) => {
                             <Link
                                 className={styles.link}
                                 to={`/product/${product.id}`}
+                                state={{ fromCategory: category }}
                             >
                                 <h3 className={styles.name}>{product.title}</h3>
                             </Link>

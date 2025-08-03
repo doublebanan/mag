@@ -11,12 +11,17 @@ export const BottomNav = () => {
     const { pathname } = useLocation();
     const count = useCartStore((state) => state.getTotalCount());
 
+    const activePaths = [
+        "/catalog/fan",
+        "/catalog/tv",
+        "/catalog/mobile",
+        "/catalog/laptop",
+    ];
+    const isActive = activePaths.includes(pathname);
+
     return (
         <nav className={styles.nav}>
-            <Link
-                to="/catalog"
-                className={pathname === "/catalog" ? styles.active : ""}
-            >
+            <Link to="/catalog" className={isActive ? styles.active : ""}>
                 <HomeIcon className={styles.icon} />
                 <div className={styles.title}>каталог</div>
             </Link>

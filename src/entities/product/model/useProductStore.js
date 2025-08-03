@@ -41,11 +41,17 @@ export const useProductsStore = create((set, get) => ({
 
     getProducts: (category) => {
         const { productsByCategory } = get();
+
         return productsByCategory[category] || [];
     },
 
     getProductById: (id) => {
         const map = get().productsById;
         return map[String(id)] || null;
+    },
+
+    getAllProducts: () => {
+        const map = get().productsById;
+        return Object.values(map);
     },
 }));
