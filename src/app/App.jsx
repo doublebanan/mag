@@ -7,14 +7,14 @@ import { ProfilePage } from "../pages/ProfilePage";
 import { BottomNav } from "../widgets/BottomNav/BottomNav";
 import { ProductPage } from "../pages/ProductPage";
 
-import style from "./App.module.css";
+import styles from "./App.module.css";
 
 function App() {
     return (
         <BrowserRouter>
-            <div className={style.app}>
+            <div className={styles.app}>
                 <TopBar />
-                <main className={style.scroll}>
+                <main className={styles.scroll}>
                     <Routes>
                         <Route path="/" element={<Navigate to="/catalog" />} />
                         <Route path="/product/:id" element={<ProductPage />} />

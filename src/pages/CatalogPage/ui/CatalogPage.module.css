@@ -1,0 +1,55 @@
+.titleBlock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 25px;
+}
+.button:hover {
+    color: var(--blue);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 150;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+.badgeClose {
+    cursor: pointer;
+    border: none;
+    background: transparent;
+}
+
+.badgeClose:hover {
+    color: var(--blue);
+}
+
+.sortBadge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    background: #f0f0f0;
+    border-radius: 12px;
+    color: #555;
+}

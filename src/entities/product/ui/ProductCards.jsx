@@ -14,7 +14,7 @@ import styles from "./ProductCards.module.css";
 
 import HeartIcon from "../../../shared/assets/icons/heart.svg?react";
 
-const ProductCards = ({ category }) => {
+const ProductCards = ({ category, sort }) => {
     const tgId = 1;
 
     const actionLoading = useCartStore((state) => state.actionLoading);
@@ -40,11 +40,20 @@ const ProductCards = ({ category }) => {
 
     const filtered = useMemo(() => {
         if (products === null) return null;
-        if (!category) return products;
-        return products.filter(
-            (p) => p.subtitle.toLowerCase() === category.toLowerCase()
-        );
-    }, [products, category]);
+        let arr = products;
+
+        if (category) {
+            arr = arr.filter(
+                (p) => p.subtitle.toLowerCase() === category.toLowerCase()
+            );
+        }
+
+        if (sort === "expensive")
+            arr = [...arr].sort((a, b) => b.price - a.price);
+        if (sort === "cheap") arr = [...arr].sort((a, b) => a.price - b.price);
+
+        return arr;
+    }, [products, category, sort]);
 
     if (loading) {
         return (
