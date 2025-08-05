@@ -1,3 +1,7 @@
+.catalogPage {
+    position: relative;
+}
+
 .titleBlock {
     display: flex;
     justify-content: space-between;

@@ -11,12 +11,16 @@ import { Button } from "../../../shared/assets/Button/Button";
 
 import { useProductService } from "../../../shared/hooks/useProductServise";
 
+import { QtyBox } from "../../../shared/ui/QtyBox/QtyBox";
+
 import BackIcon from "../../../shared/assets/icons/back.svg?react";
 import HeartIcon from "../../../shared/assets/icons/heart.svg?react";
 
 import styles from "./ProductPage.module.css";
 
 export const ProductPage = () => {
+    const tgId = 1;
+
     const goBack = useSmartGoBack();
 
     const { id } = useParams();
@@ -26,8 +30,13 @@ export const ProductPage = () => {
     const [product, setProduct] = useState(undefined);
 
     const cart = useCartStore((state) => state.cart);
-    const toggleCart = useCartStore((state) => state.toggleCart);
+    const addToCart = useCartStore((state) => state.addToCart);
+    const actionLoading = useCartStore((state) => state.actionLoading);
+    const removeFromCart = useCartStore((state) => state.removeFromCart);
+
     const inProductByCart = useCartStore((state) => state.isActive);
+
+    const count = product ? cart[product.id] || 0 : 0;
 
     const toggleFavorites = useFavoriteStore((state) => state.toggleFavorite);
 
@@ -92,16 +101,34 @@ export const ProductPage = () => {
                     </div>
                 </div>
                 <div className={styles.btnBlock}>
-                    <Button
-                        size="medium"
-                        className={clsx(
-                            styles.buttonBig,
-                            inCart && styles.activeBtn
-                        )}
-                        onClick={() => toggleCart(product)}
-                    >
-                        {inCart ? "В корзине" : "Купить"}
-                    </Button>
+                    {count === 0 ? (
+                        <div className={styles.btnBlock}>
+                            {" "}
+                            <Button
+                                size="medium"
+                                className={clsx(
+                                    styles.buttonBig,
+                                    inCart && styles.activeBtn
+                                )}
+                                onClick={() => {
+                                    addToCart(tgId, product.id);
+                                }}
+                            >
+                                Купить
+                            </Button>
+                        </div>
+                    ) : (
+                        <div className={styles.box}>
+                            <QtyBox
+                                count={count}
+                                onDecrement={() =>
+                                    removeFromCart(tgId, product.id)
+                                }
+                                onIncrement={() => addToCart(tgId, product.id)}
+                                disabled={actionLoading}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </>

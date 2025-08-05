@@ -55,4 +55,6 @@
     min-height: 16px;
     text-align: center;
     line-height: 1;
+    transform: none;
+    z-index: 10;
 }

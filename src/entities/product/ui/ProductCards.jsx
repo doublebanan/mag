@@ -10,11 +10,15 @@ import { Skeleton } from "../../../shared/ui/Skeleton/Skeleton";
 import { Button } from "../../../shared/assets/Button/Button";
 import { QtyBox } from "../../../shared/ui/QtyBox/QtyBox";
 
+import { useToastStore } from "../../../shared/model/useToasterStore";
+
 import styles from "./ProductCards.module.css";
 
 import HeartIcon from "../../../shared/assets/icons/heart.svg?react";
 
 const ProductCards = ({ category, sort }) => {
+    const { showToast } = useToastStore();
+
     const tgId = 1;
 
     const actionLoading = useCartStore((state) => state.actionLoading);
@@ -124,7 +128,10 @@ const ProductCards = ({ category, sort }) => {
                                 <Button
                                     size="small"
                                     className={inCart ? styles.activeBtn : ""}
-                                    onClick={() => addToCart(tgId, product.id)}
+                                    onClick={() => {
+                                        addToCart(tgId, product.id);
+                                        showToast("Товар добавлен!");
+                                    }}
                                 >
                                     Купить
                                 </Button>

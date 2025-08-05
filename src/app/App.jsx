@@ -23,6 +23,7 @@ function App() {
                         <Route path="/profile" element={<ProfilePage />} />
                     </Routes>
                 </main>
+
                 <BottomNav />
             </div>
         </BrowserRouter>

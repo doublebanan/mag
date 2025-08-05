@@ -9,9 +9,14 @@ import { SortPanel } from "../../../shared/ui/SortPanel/SortPanel";
 import SettingsIcon from "../../../shared/assets/icons/settings.svg?react";
 import CroosIcon from "../../../shared/assets/icons/cross.svg?react";
 
+import { Toaster } from "../../../shared/ui/Toaster/Toaster";
+import { useToastStore } from "../../../shared/model/useToasterStore";
+
 import styles from "./CatalogPage.module.css";
 
 export const CatalogPage = () => {
+    const { message, clearToast } = useToastStore();
+
     const [active, setActive] = useState(false);
     const [sort, setSort] = useState("default");
 
@@ -24,7 +29,7 @@ export const CatalogPage = () => {
     };
 
     return (
-        <div>
+        <div className={styles.catalogPage}>
             <AnimatePresence>
                 {active && (
                     <motion.div
@@ -61,6 +66,7 @@ export const CatalogPage = () => {
                 </button>
             </div>
             <CategoriesNav />
+            <Toaster message={message} onClose={clearToast} />
             <Routes>
                 <Route path="/" element={<Navigate to="fan" />} />
                 <Route

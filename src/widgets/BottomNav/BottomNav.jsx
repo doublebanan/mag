@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useCartStore } from "../../features/cart/model/useCartStore";
+import { motion, AnimatePresence } from "framer-motion";
 
 import styles from "./BottomNav.module.css";
 
@@ -31,7 +32,19 @@ export const BottomNav = () => {
             >
                 <TrashIcon className={styles.icon} />
                 <div className={styles.title}>
-                    {count > 0 && <span className={styles.badge}>{count}</span>}
+                    <AnimatePresence>
+                        {count > 0 && (
+                            <motion.span
+                                className={styles.badge}
+                                initial={{ opacity: 0, scale: 0.5 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.5 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                {count}
+                            </motion.span>
+                        )}
+                    </AnimatePresence>
                     корзина
                 </div>
             </Link>

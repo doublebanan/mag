@@ -1,12 +1,30 @@
-# React + Vite
+В приложении реализованы:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+-   Каталог товаров (получение данных через API)
+-   Страница отдельного товара
+-   Корзина (работает через API)
+-   Избранное (favorites)
+-   Профиль пользователя
+-   Анимации, skeleton-загрузки, всплывающие уведомления (toast)
+-   Состояние приложения — Zustand
+-   Архитектура проекта: feature-sliced design
 
-Currently, two official plugins are available:
+Технологии:
+React, React Router v6, Zustand, Vite, CSS-модули, Framer Motion
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Структура проекта:
 
-## Expanding the ESLint configuration
+1. app — инициализация приложения, роутинг
+2. entities — бизнес-сущности (product, category)
+3. features — независимые фичи (cart, favorites, profile)
+4. pages — страницы (catalog, cart, profile, product)
+5. widgets — составные блоки (TopBar, BottomNav и другие)
+6. shared — переиспользуемые компоненты, утилиты, api, хуки
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Проект разрабатывался совместно с backend-разработчиком. В процессе был постоянный диалог по структуре, API и оптимизации архитектурных решений.
+
+Запуск проекта:
+git clone https://github.com/doublebanan/mag.git
+cd mag
+npm install
+npm run dev
