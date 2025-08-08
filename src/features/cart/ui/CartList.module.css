@@ -37,9 +37,8 @@
 
 .priceContainer {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 8px;
-    margin-bottom: 6px;
 }
 
 .icon {

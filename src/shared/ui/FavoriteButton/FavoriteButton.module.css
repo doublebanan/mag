@@ -1,0 +1,32 @@
+.button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    transition: fill 0.2s ease;
+    color: var(--blue);
+}
+
+.active {
+    color: red;
+}
+
+.small {
+    width: 16px;
+    height: 16px;
+}
+
+.medium {
+    width: 25px;
+    height: 25px;
+}
+
+.large {
+    width: 40px;
+    height: 40px;
+}

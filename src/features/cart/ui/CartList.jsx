@@ -3,13 +3,10 @@ import { useEffect } from "react";
 import { useCartStore } from "../model/useCartStore";
 import { useFavoriteStore } from "../../profile-favorites/model/useFavoriteStore";
 import { useProductsStore } from "../../../entities/product/model/useProductStore";
-
+import { CartControls } from "../../../shared/ui/CartControl/CartControls";
 import { Skeleton } from "../../../shared/ui/Skeleton/Skeleton";
-
+import { FavoriteButton } from "../../../shared/ui/FavoriteButton/FavoriteButton";
 // import CrossIcon from "../../../shared/assets/icons/cross.svg?react";
-import HeartIcon from "../../../shared/assets/icons/heart.svg?react";
-
-import { QtyBox } from "../../../shared/ui/QtyBox/QtyBox";
 
 import styles from "./CartList.module.css";
 
@@ -18,7 +15,7 @@ export const CartList = () => {
 
     const fetchCart = useCartStore((state) => state.fetchCart);
     const loading = useCartStore((state) => state.loading);
-    const actionLoading = useCartStore((state) => state.actionLoading);
+
     const loadProducts = useProductsStore((state) => state.loadProducts);
 
     useEffect(() => {
@@ -29,11 +26,9 @@ export const CartList = () => {
     const getProductById = useProductsStore((state) => state.getProductById);
 
     const cart = useCartStore((state) => state.cart);
-    const addToCart = useCartStore((state) => state.addToCart);
-    const current = useCartStore((state) => state.getTotalCount());
-    const removeFromCart = useCartStore((state) => state.removeFromCart);
 
-    const toggleFavorites = useFavoriteStore((state) => state.toggleFavorite);
+    const current = useCartStore((state) => state.getTotalCount());
+
     const favorites = useFavoriteStore((state) => state.favorites);
 
     //маппинг ид из каталога продуктов
@@ -57,10 +52,6 @@ export const CartList = () => {
     return (
         <ul className={styles.cards}>
             {cartItems.map((product) => {
-                const count = cart[product.id] || 0;
-                const favorite = favorites.some(
-                    (item) => item.id === product.id
-                );
                 return (
                     <li key={product.id} className={styles.card}>
                         <div className={styles.imageContainer}>
@@ -76,29 +67,13 @@ export const CartList = () => {
                             </h3>
                         </div>
                         <div className={styles.priceBlock}>
-                            <QtyBox
-                                count={count}
-                                onDecrement={() =>
-                                    removeFromCart(tgId, product.id)
-                                }
-                                onIncrement={() => addToCart(tgId, product.id)}
-                                disabled={actionLoading}
-                            />
+                            <CartControls product={product} />
                             <div className={styles.priceContainer}>
                                 <span className={styles.currentPrice}>
                                     {product.price} P
                                 </span>
                             </div>
-                            <button
-                                onClick={() => toggleFavorites(product)}
-                                className={styles.button}
-                            >
-                                <HeartIcon
-                                    className={`${styles.icon} ${
-                                        favorite ? styles.active : ""
-                                    }`}
-                                />
-                            </button>
+                            <FavoriteButton product={product} />
                             {/* <button
                                 onClick={() => removeFromCart(tgId, product.id)}
                                 className={styles.button}

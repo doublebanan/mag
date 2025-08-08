@@ -49,8 +49,8 @@ export const useProductsStore = create((set, get) => ({
         const map = get().productsById;
         return map[String(id)] || null;
     },
-
     getAllProducts: () => {
+        // Собрать все продукты в один массив (из productsById)
         const map = get().productsById;
         return Object.values(map);
     },

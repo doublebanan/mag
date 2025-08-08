@@ -1,15 +1,12 @@
-import { useEffect } from "react";
-
+import { useToastStore } from "../../model/useToasterStore";
 import styles from "./Toaster.module.css";
 
-export const Toaster = ({ message, onClose }) => {
-    useEffect(() => {
-        if (!message) return;
-        const timer = setTimeout(onClose, 2000);
-        return () => clearTimeout(timer);
-    }, [message, onClose]);
+export const Toaster = () => {
+    const { message, visible } = useToastStore();
 
-    if (!message) return null;
-
-    return <div className={styles.toaster}>{message}</div>;
+    return (
+        <div className={`${styles.toaster} ${visible ? styles.show : ""}`}>
+            {message}
+        </div>
+    );
 };

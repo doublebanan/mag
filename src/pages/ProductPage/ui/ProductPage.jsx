@@ -1,26 +1,17 @@
 import { useState, useEffect } from "react";
-
 import { useParams } from "react-router-dom";
-import clsx from "clsx";
 
 import { useSmartGoBack } from "../../../shared/lib/useSmartGoBack";
-import { useCartStore } from "../../../features/cart/model/useCartStore";
-import { useFavoriteStore } from "../../../features/profile-favorites/model/useFavoriteStore";
-
-import { Button } from "../../../shared/assets/Button/Button";
+import { CartControls } from "../../../shared/ui/CartControl/CartControls";
+import { FavoriteButton } from "../../../shared/ui/FavoriteButton/FavoriteButton";
 
 import { useProductService } from "../../../shared/hooks/useProductServise";
 
-import { QtyBox } from "../../../shared/ui/QtyBox/QtyBox";
-
 import BackIcon from "../../../shared/assets/icons/back.svg?react";
-import HeartIcon from "../../../shared/assets/icons/heart.svg?react";
 
 import styles from "./ProductPage.module.css";
 
 export const ProductPage = () => {
-    const tgId = 1;
-
     const goBack = useSmartGoBack();
 
     const { id } = useParams();
@@ -28,20 +19,6 @@ export const ProductPage = () => {
     const { getProduct, clearError } = useProductService();
 
     const [product, setProduct] = useState(undefined);
-
-    const cart = useCartStore((state) => state.cart);
-    const addToCart = useCartStore((state) => state.addToCart);
-    const actionLoading = useCartStore((state) => state.actionLoading);
-    const removeFromCart = useCartStore((state) => state.removeFromCart);
-
-    const inProductByCart = useCartStore((state) => state.isActive);
-
-    const count = product ? cart[product.id] || 0 : 0;
-
-    const toggleFavorites = useFavoriteStore((state) => state.toggleFavorite);
-
-    //Ошибка где то тут
-    const favorites = useFavoriteStore((state) => state.favorites);
 
     useEffect(() => {
         clearError();
@@ -55,25 +32,13 @@ export const ProductPage = () => {
         return <div className={styles.notFound}>Товар не найден</div>;
     }
 
-    const favorite = favorites.some((item) => item.id === product.id);
-    const inCart = inProductByCart(product.id);
-
     return (
         <>
             <div className={styles.back}>
                 <button onClick={goBack} className={styles.button}>
                     <BackIcon className={styles.icon} />
                 </button>
-                <button
-                    onClick={() => toggleFavorites(product)}
-                    className={styles.button}
-                >
-                    <HeartIcon
-                        className={`${styles.icon} ${
-                            favorite ? styles.active : ""
-                        }`}
-                    />
-                </button>
+                <FavoriteButton product={product} size={"large"} />
             </div>
             <div className={styles.page}>
                 <h2 className={styles.title}>{product.title}</h2>
@@ -101,34 +66,7 @@ export const ProductPage = () => {
                     </div>
                 </div>
                 <div className={styles.btnBlock}>
-                    {count === 0 ? (
-                        <div className={styles.btnBlock}>
-                            {" "}
-                            <Button
-                                size="medium"
-                                className={clsx(
-                                    styles.buttonBig,
-                                    inCart && styles.activeBtn
-                                )}
-                                onClick={() => {
-                                    addToCart(tgId, product.id);
-                                }}
-                            >
-                                Купить
-                            </Button>
-                        </div>
-                    ) : (
-                        <div className={styles.box}>
-                            <QtyBox
-                                count={count}
-                                onDecrement={() =>
-                                    removeFromCart(tgId, product.id)
-                                }
-                                onIncrement={() => addToCart(tgId, product.id)}
-                                disabled={actionLoading}
-                            />
-                        </div>
-                    )}
+                    <CartControls product={product} size={"medium"} />
                 </div>
             </div>
         </>

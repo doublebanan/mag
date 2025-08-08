@@ -90,10 +90,10 @@ export const CatalogPage = () => {
                 {active && (
                     <motion.div
                         className={styles.sortPanel}
-                        initial={{ opacity: 0, y: -50 }}
+                        initial={{ opacity: 0 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -50 }}
-                        transition={{ duration: 0.2 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.1 }}
                     >
                         <SortPanel
                             value={sort}
