@@ -1,17 +1,5 @@
 export const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
 
-export const request = async (
-    url,
-    method = "GET",
-    body = null,
-    headers = {}
-) => {
-    const response = await fetch(url, { method, body, headers });
-    if (!response.ok)
-        throw new Error(`Could not fetch ${url}, status: ${response.status}`);
-    return response.json();
-};
-
 export const endpoints = {
     products: {
         list: () => `${API_BASE}/products/`,

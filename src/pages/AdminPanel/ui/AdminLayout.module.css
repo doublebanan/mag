@@ -1,0 +1,75 @@
+.layout {
+    min-height: calc(100vh - 120px);
+}
+.sidebar {
+    border-right: 1px solid #eee;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.brand {
+    color: black;
+    font-weight: 700;
+    font-size: 18px;
+}
+.nav {
+    display: grid;
+    gap: 10px;
+    margin-top: 15px;
+}
+.link {
+    text-align: center;
+    height: 40px;
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 10px;
+    display: block;
+    background-color: var(--solid);
+}
+.active {
+    text-align: center;
+    height: 40px;
+    color: var(--blue);
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 8px 10px;
+    background-color: none;
+    border: 1px solid var(--blue);
+}
+.user {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+
+    justify-content: center;
+    padding: 10px;
+}
+.role {
+    font-size: 12px;
+    opacity: 0.7;
+}
+.main {
+    padding: 16px;
+}
+
+.userStaff {
+    width: auto;
+
+    padding: 5px;
+    border-radius: 20px;
+    color: var(--blue);
+    background: var(--solid);
+    line-height: 1;
+}
+
+.panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.outlet {
+    padding: 16px;
+}
