@@ -5,7 +5,7 @@ import { useSmartGoBack } from "../../../shared/lib/useSmartGoBack";
 import { CartControls } from "../../../shared/ui/CartControl/CartControls";
 import { FavoriteButton } from "../../../shared/ui/FavoriteButton/FavoriteButton";
 
-import { useProductService } from "../../../shared/hooks/useProductServise";
+import { useProductsStore } from "../../../entities/product/model/useProductStore";
 
 import BackIcon from "../../../shared/assets/icons/back.svg?react";
 
@@ -16,17 +16,24 @@ export const ProductPage = () => {
 
     const { id } = useParams();
 
-    const { getProduct, clearError } = useProductService();
+    const getProductById = useProductsStore((s) => s.getProductById);
 
     const [product, setProduct] = useState(undefined);
 
     useEffect(() => {
-        clearError();
         setProduct(undefined);
-        getProduct(id)
-            .then((data) => setProduct(data || null))
-            .catch(() => setProduct(null));
-    }, [id, getProduct, clearError]);
+        const cached = getProductById(id);
+        if (cached) {
+            setProduct(cached);
+        } else {
+            import("../../../shared/api").then(({ apiProducts }) => {
+                apiProducts
+                    .byId(id)
+                    .then((data) => setProduct(data || null))
+                    .catch(() => setProduct(null));
+            });
+        }
+    }, [id, getProductById]);
 
     if (!product) {
         return <div className={styles.notFound}>Товар не найден</div>;
@@ -49,9 +56,7 @@ export const ProductPage = () => {
                         className={styles.image}
                     />
                 </div>
-                <p className={styles.subTitle}>
-                    Описание: Можно добавить позже..
-                </p>
+                <p className={styles.subTitle}>{product.description}</p>
                 <div className={styles.valueBlock}>
                     <div className={styles.rating}>
                         <p className={styles.ratingTitle}>

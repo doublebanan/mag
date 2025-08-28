@@ -5,7 +5,8 @@ import { useToastStore } from "../../../shared/model/useToasterStore";
 
 export const CartControls = ({ product, size, text = "Купить" }) => {
     const tgId = 1;
-    const { addToCart, removeFromCart, actionLoading, cart } = useCartStore();
+    const { addToCart, removeFromCartOneCurrent, actionLoading, cart } =
+        useCartStore();
     const { showToast } = useToastStore();
 
     if (!product) return null;
@@ -26,7 +27,7 @@ export const CartControls = ({ product, size, text = "Купить" }) => {
     ) : (
         <QtyBox
             count={count}
-            onDecrement={() => removeFromCart(tgId, product.id)}
+            onDecrement={() => removeFromCartOneCurrent(tgId, product.id)}
             onIncrement={() => addToCart(tgId, product.id)}
             disabled={actionLoading}
         />

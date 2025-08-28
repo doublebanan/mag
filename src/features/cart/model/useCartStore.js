@@ -1,7 +1,8 @@
 import { create } from "zustand";
 
 import { useProductsStore } from "../../../entities/product/model/useProductStore";
-import { cartService } from "../api/apiCart";
+
+import { apiCart } from "../../../shared/api";
 
 export const useCartStore = create((set, get) => ({
     cart: {},
@@ -14,7 +15,7 @@ export const useCartStore = create((set, get) => ({
     fetchCart: async (tg_id, isInitial = false) => {
         if (isInitial) set({ loading: true, error: null });
         try {
-            const data = await cartService.getCart(tg_id);
+            const data = await apiCart.get(tg_id);
             set({ cart: data.products || {} });
         } catch (e) {
             set({ error: e.message });
@@ -29,7 +30,7 @@ export const useCartStore = create((set, get) => ({
     addToCart: async (tg_id, prod_id) => {
         set({ actionLoading: true });
         try {
-            await cartService.addToCart(tg_id, prod_id);
+            await apiCart.add(tg_id, prod_id);
 
             await get().fetchCart(tg_id, false);
         } catch (e) {
@@ -40,10 +41,22 @@ export const useCartStore = create((set, get) => ({
     },
     // удалить товар из корзины
 
+    removeFromCartOneCurrent: async (tg_id, prod_id) => {
+        set({ actionLoading: true });
+        try {
+            await apiCart.deleteItem(tg_id, prod_id);
+            await get().fetchCart(tg_id, false);
+        } catch (e) {
+            set({ error: e.message });
+        } finally {
+            set({ actionLoading: false });
+        }
+    },
+
     removeFromCart: async (tg_id, prod_id) => {
         set({ actionLoading: true });
         try {
-            await cartService.removeFromCart(tg_id, prod_id);
+            await apiCart.deleteOne(tg_id, prod_id);
             await get().fetchCart(tg_id, false);
         } catch (e) {
             set({ error: e.message });

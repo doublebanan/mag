@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { fetchProducts } from "../../../shared/hooks/useProductServise";
+import { apiProducts } from "../../../shared/api";
 
 export const useProductsStore = create((set, get) => ({
     productsByCategory: {},
@@ -9,49 +9,44 @@ export const useProductsStore = create((set, get) => ({
     error: null,
 
     loadProducts: async (category) => {
+        const key = category ?? "_all";
         const { productsByCategory, productsById } = get();
-        if (productsByCategory[category]) {
-            return;
-        }
+
+        if (productsByCategory[key]) return;
+
         set({ loading: true, error: null });
         try {
-            const data = await fetchProducts(category);
-            console.log("data из fetchProducts:", data);
-            const arr = Array.isArray(data) ? data : [];
+            const data = await apiProducts.list({ category });
+
+            const arr = Array.isArray(data)
+                ? data
+                : Array.isArray(data?.results)
+                ? data.results
+                : [];
+
             const newProductsById = { ...productsById };
-            arr.forEach((product) => {
-                if (product && product.id !== undefined) {
-                    newProductsById[String(product.id)] = product;
-                }
-            });
+            for (const p of arr) {
+                if (p && p.id != null) newProductsById[String(p.id)] = p;
+            }
+
             set({
-                productsByCategory: {
-                    ...productsByCategory,
-                    [category]: arr,
-                },
+                productsByCategory: { ...productsByCategory, [key]: arr },
                 productsById: newProductsById,
             });
-            console.log("productsById после загрузки:", newProductsById);
         } catch (e) {
-            set({ error: e.message });
+            console.warn("loadProducts error:", e);
+            set({ error: e?.message ?? String(e) });
         } finally {
             set({ loading: false });
         }
     },
 
     getProducts: (category) => {
-        const { productsByCategory } = get();
-
-        return productsByCategory[category] || [];
+        const key = category ?? "_all";
+        return get().productsByCategory[key] || [];
     },
 
-    getProductById: (id) => {
-        const map = get().productsById;
-        return map[String(id)] || null;
-    },
-    getAllProducts: () => {
-        // Собрать все продукты в один массив (из productsById)
-        const map = get().productsById;
-        return Object.values(map);
-    },
+    getProductById: (id) => get().productsById[String(id)] || null,
+
+    getAllProducts: () => Object.values(get().productsById),
 }));

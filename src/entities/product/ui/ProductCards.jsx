@@ -24,7 +24,7 @@ const ProductCards = ({ category, sort }) => {
 
         if (category) {
             arr = arr.filter(
-                (p) => p.subtitle.toLowerCase() === category.toLowerCase()
+                (p) => p.category.toLowerCase() === category.toLowerCase()
             );
         }
 

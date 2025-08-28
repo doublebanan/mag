@@ -6,15 +6,15 @@ import { useProductsStore } from "../../../entities/product/model/useProductStor
 import { CartControls } from "../../../shared/ui/CartControl/CartControls";
 import { Skeleton } from "../../../shared/ui/Skeleton/Skeleton";
 import { FavoriteButton } from "../../../shared/ui/FavoriteButton/FavoriteButton";
-// import CrossIcon from "../../../shared/assets/icons/cross.svg?react";
+import CrossIcon from "../../../shared/assets/icons/cross.svg?react";
 
 import styles from "./CartList.module.css";
 
 export const CartList = () => {
     const tgId = 1;
 
-    const fetchCart = useCartStore((state) => state.fetchCart);
-    const loading = useCartStore((state) => state.loading);
+    const { fetchCart, loading, cart, removeFromCart, current } =
+        useCartStore();
 
     const loadProducts = useProductsStore((state) => state.loadProducts);
 
@@ -24,10 +24,6 @@ export const CartList = () => {
     }, []);
 
     const getProductById = useProductsStore((state) => state.getProductById);
-
-    const cart = useCartStore((state) => state.cart);
-
-    const current = useCartStore((state) => state.getTotalCount());
 
     const favorites = useFavoriteStore((state) => state.favorites);
 
@@ -74,12 +70,12 @@ export const CartList = () => {
                                 </span>
                             </div>
                             <FavoriteButton product={product} />
-                            {/* <button
+                            <button
                                 onClick={() => removeFromCart(tgId, product.id)}
                                 className={styles.button}
                             >
                                 <CrossIcon className={styles.icon} />
-                            </button> */}
+                            </button>
                         </div>
                     </li>
                 );
