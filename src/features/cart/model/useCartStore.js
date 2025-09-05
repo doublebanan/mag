@@ -12,10 +12,10 @@ export const useCartStore = create((set, get) => ({
 
     //получить корзину ид тг или пустую
 
-    fetchCart: async (tg_id, isInitial = false) => {
+    fetchCart: async (tgId, isInitial = false) => {
         if (isInitial) set({ loading: true, error: null });
         try {
-            const data = await apiCart.get(tg_id);
+            const data = await apiCart.get(tgId);
             set({ cart: data.products || {} });
         } catch (e) {
             set({ error: e.message });

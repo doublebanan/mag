@@ -1,19 +1,21 @@
+const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+
 import { request } from "../../../shared/api";
 
 export const cartService = {
     //Добавить товар
-    addToCart: (tg_id, prod_id) => {
-        const url = `http://localhost:8000/cart/add_to_cart/${tg_id}/?prod_id=${prod_id}`;
+    addToCart: (tgId, prodId) => {
+        const url = `${API_BASE}/add_to_cart/${tgId}/?prod_id=${prodId}`;
         return request(url, "POST");
     },
     //удалить товар
-    removeFromCart: (tg_id, prod_id) => {
-        const url = `http://localhost:8000/cart/delete_from_cart/?tg_id=${tg_id}&prod_id=${prod_id}`;
+    removeFromCart: (tgId, prodId) => {
+        const url = `${API_BASE}/delete_from_cart/?tg_id=${tgId}&prod_id=${prodId}`;
         return request(url, "DELETE");
     },
     //получить корзину
-    getCart: (tg_id) => {
-        const url = `http://localhost:8000/cart/get_cart/${tg_id}/`;
+    getCart: (tgId) => {
+        const url = `${API_BASE}/cart/get_cart/${tgId}/`;
         return request(url, "GET");
     },
 };

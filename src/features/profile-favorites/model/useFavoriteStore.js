@@ -1,51 +1,98 @@
 import { create } from "zustand";
+import { apiUsers } from "../../../shared/api";
 
-import { fetchProduct } from "../../../shared/hooks/useProductServise";
+const toNum = (v) => Number(v);
+const normalizeIds = (data) => {
+    if (Array.isArray(data))
+        return data.map(toNum).filter((n) => !Number.isNaN(n));
+    if (typeof data === "string") {
+        return data
+            .split(",")
+            .map((s) => toNum(s.trim()))
+            .filter((n) => !Number.isNaN(n));
+    }
+    return [];
+};
 
 export const useFavoriteStore = create((set, get) => ({
-    favorites: [],
-    error: null,
+    ids: new Set(),
     loading: false,
+    actionLoading: false,
+    error: null,
 
-    initCart: async (id) => {
-        set({ loading: true, error: null });
+    // загрузить избранное пользователя
+    fetchFavorites: async (tgId, isInitial = false) => {
+        if (isInitial) set({ loading: true, error: null });
         try {
-            const product = await fetchProduct(id);
-            set({ favorites: [product] });
+            const data = await apiUsers.favorites(toNum(tgId));
+            const arr = normalizeIds(data);
+            set({ ids: new Set(arr) });
         } catch (e) {
-            set({ error: e.message });
+            set({ error: e?.message || "Failed to fetch favorites" });
         } finally {
-            set({ loading: false });
+            if (isInitial) set({ loading: false });
         }
     },
-    // добавить товар в избранное
-    addToFavorites: (product) => {
-        set((state) => ({ favorites: [...state.favorites, { ...product }] }));
-    },
-    // удалить товар из избранного
-    removeFromFavorites: (productId) => {
-        set((state) => ({
-            favorites: state.favorites.filter((item) => item.id !== productId),
-        }));
-    },
+
+    // проверить, что товар в избранном
     isFavorite: (productId) => {
-        return get().favorites.some((item) => item.id === productId);
+        const id = toNum(productId);
+        return get().ids.has(id);
     },
 
-    toggleFavorite: (product) => {
-        const state = get();
-        const exists = state.favorites.some((item) => item.id === product.id);
-
-        if (exists) {
+    // добавить (оптимистично)
+    addFavorite: async (tgId, prodId) => {
+        const id = toNum(prodId);
+        const next = new Set(get().ids);
+        next.add(id);
+        set({ ids: next, actionLoading: true, error: null });
+        try {
+            await apiUsers.favAdd(toNum(tgId), id);
+        } catch (e) {
+            // откат
+            const rollback = new Set(get().ids);
+            rollback.delete(id);
             set({
-                favorites: state.favorites.filter(
-                    (item) => item.id !== product.id
-                ),
+                ids: rollback,
+                error: e?.message || "Failed to add favorite",
             });
-        } else {
-            set({
-                favorites: [...state.favorites, { ...product }],
-            });
+            throw e;
+        } finally {
+            set({ actionLoading: false });
         }
     },
+
+    // удалить
+    removeFavorite: async (tgId, prodId) => {
+        const id = toNum(prodId);
+        const next = new Set(get().ids);
+        const had = next.delete(id);
+        set({ ids: next, actionLoading: true, error: null });
+        try {
+            // ВАЖНО: бек возвращает 204 БЕЗ тела — в apiUsers просто проверяй res.ok
+            await apiUsers.favDelete(toNum(tgId), id);
+        } catch (e) {
+            // откат
+            if (had) {
+                const rollback = new Set(get().ids);
+                rollback.add(id);
+                set({ ids: rollback });
+            }
+            set({ error: e?.message || "Failed to remove favorite" });
+            throw e;
+        } finally {
+            set({ actionLoading: false });
+        }
+    },
+
+    // переключить
+    toggleFavorite: async (tgId, prodId) => {
+        const id = toNum(prodId);
+        return get().isFavorite(id)
+            ? get().removeFavorite(tgId, id)
+            : get().addFavorite(tgId, id);
+    },
+
+    // список id (массив)
+    list: () => Array.from(get().ids),
 }));

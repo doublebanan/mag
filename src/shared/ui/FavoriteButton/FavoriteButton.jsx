@@ -5,16 +5,18 @@ import clsx from "clsx";
 import styles from "./FavoriteButton.module.css";
 
 export const FavoriteButton = ({ product, size = "medium" }) => {
-    const toggleFavorites = useFavoriteStore((state) => state.toggleFavorite);
-    const favorites = useFavoriteStore((state) => state.favorites);
+    const tgId = 1;
+    const favorite = useFavoriteStore((s) => s.ids.has(Number(product.id)));
+    const toggle = useFavoriteStore((s) => s.toggleFavorite);
+    const busy = useFavoriteStore((s) => s.actionLoading);
 
-    const favorite = favorites.some((item) => item.id === product.id);
     if (!product) return null;
 
     return (
         <button
-            onClick={() => toggleFavorites(product)}
+            onClick={() => toggle(tgId, product.id)}
             className={styles.button}
+            disabled={busy}
         >
             <HeartIcon
                 className={clsx(styles.icon, styles[size], {

@@ -36,11 +36,11 @@ export const apiProducts = {
 export const apiUsers = {
     getByTgId: (tgId) => request(`/get_user/${tgId}/`),
     create: (payload) => request("/create_user/", "POST", payload),
-    favorites: (userId) => request(`/users/${userId}/favorites/`),
-    favAdd: (userId, productId) =>
-        request(`/users/${userId}/favorites/${productId}/`, "POST"),
-    favDelete: (userId, productId) =>
-        request(`/users/${userId}/favorites/${productId}/`, "DELETE"),
+    favorites: (tgId) => request(`/users/${tgId}/favorites`),
+    favAdd: (tgId, prodId) =>
+        request(`/users/${tgId}/favorites/${prodId}/`, "POST"),
+    favDelete: (tgId, prodId) =>
+        request(`/users/${tgId}/favorites/${prodId}`, "DELETE"),
 };
 
 //CART

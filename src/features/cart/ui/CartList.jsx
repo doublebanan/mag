@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 
 import { useCartStore } from "../model/useCartStore";
-import { useFavoriteStore } from "../../profile-favorites/model/useFavoriteStore";
 import { useProductsStore } from "../../../entities/product/model/useProductStore";
 import { CartControls } from "../../../shared/ui/CartControl/CartControls";
 import { Skeleton } from "../../../shared/ui/Skeleton/Skeleton";
@@ -25,9 +24,6 @@ export const CartList = () => {
 
     const getProductById = useProductsStore((state) => state.getProductById);
 
-    const favorites = useFavoriteStore((state) => state.favorites);
-
-    //маппинг ид из каталога продуктов
     const cartItems = Object.entries(cart)
         .map(([id, qty]) => {
             const product = getProductById(String(id));
